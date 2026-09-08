@@ -1,0 +1,30 @@
+# Default demo config. Override via CLI flags or a YAML file.
+seed: 7
+image_size: 128
+
+demo:
+  per_class: 8
+  val_per_class: 2
+  test_per_class: 2
+  imbalanced: true
+
+segmentation:
+  epochs: 6
+  batch_size: 8
+  lr: 0.001
+  base_channels: 16
+  dice_weight: 0.5
+
+classification:
+  epochs: 6
+  batch_size: 8
+  lr: 0.001
+  backbone: resnet18
+  pretrained: false
+  crop_mode: whole   # whole | crop_gt | crop_pred
+  imbalance: weights  # weights | sampler | none
+  freeze_epochs: 0
+
+classical:
+  n_estimators: 200
+  max_depth: 6

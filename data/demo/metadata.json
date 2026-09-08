@@ -1,0 +1,31 @@
+{
+  "synthetic": true,
+  "not_isic": true,
+  "image_size": 128,
+  "seed": 7,
+  "imbalanced": true,
+  "n_images": 84,
+  "counts": {
+    "test/AKIEC": 2,
+    "test/BCC": 2,
+    "test/BKL": 2,
+    "test/DF": 2,
+    "test/MEL": 2,
+    "test/NV": 2,
+    "test/VASC": 2,
+    "train/AKIEC": 2,
+    "train/BCC": 3,
+    "train/BKL": 6,
+    "train/DF": 1,
+    "train/MEL": 6,
+    "train/NV": 37,
+    "train/VASC": 1,
+    "val/AKIEC": 2,
+    "val/BCC": 2,
+    "val/BKL": 2,
+    "val/DF": 2,
+    "val/MEL": 2,
+    "val/NV": 2,
+    "val/VASC": 2
+  }
+}

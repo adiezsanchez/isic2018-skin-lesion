@@ -1,0 +1,25 @@
+# Starting point for training on the official ISIC 2018 archives.
+# Download first: `pixi run download --agree`
+seed: 7
+image_size: 224
+
+segmentation:
+  epochs: 50
+  batch_size: 8
+  lr: 0.0003
+  base_channels: 32
+  dice_weight: 0.5
+
+classification:
+  epochs: 30
+  batch_size: 16
+  lr: 0.0001
+  backbone: resnet18
+  pretrained: true
+  crop_mode: whole
+  imbalance: weights
+  freeze_epochs: 3
+
+classical:
+  n_estimators: 400
+  max_depth: 8

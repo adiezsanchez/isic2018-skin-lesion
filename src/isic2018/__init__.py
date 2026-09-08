@@ -1,0 +1,5 @@
+"""ISIC 2018 pedagogical toolkit (PyTorch + Pixi)."""
+
+from __future__ import annotations
+
+__version__ = "0.1.0"
