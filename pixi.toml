@@ -1,0 +1,84 @@
+[workspace]
+name = "isic2018-skin-lesion"
+version = "0.1.0"
+description = "Pedagogical ISIC 2018 skin-lesion segmentation and classification with PyTorch, NVIDIA CUDA, Napari, and Plotly."
+authors = ["Alberto Diez <adiez.biotech@gmail.com>"]
+channels = ["conda-forge"]
+# CUDA platforms are listed first so a machine with an NVIDIA driver selects
+# GPU PyTorch. CPU platforms keep linux-64 / win-64 usable without a GPU
+# (CI, laptops). The conda subdirs remain linux-64 and win-64 only.
+platforms = [
+  { name = "linux-64-cuda", platform = "linux-64", cuda = "12.0" },
+  { name = "win-64-cuda", platform = "win-64", cuda = "12.0" },
+  { name = "linux-64-cpu", platform = "linux-64" },
+  { name = "win-64-cpu", platform = "win-64" },
+]
+license = "MIT"
+readme = "README.md"
+
+[activation.env]
+PYTHONPATH = "src"
+
+[dependencies]
+python = "3.12.*"
+torchvision = ">=0.19"
+numpy = ">=1.26"
+pandas = ">=2.1"
+pillow = ">=10.3"
+scipy = ">=1.11"
+scikit-learn = ">=1.4"
+scikit-image = ">=0.22"
+xgboost = ">=2.0"
+plotly = ">=5.20"
+python-kaleido = ">=0.2"
+napari = ">=0.4.19"
+pyqt = "5.*"
+pyyaml = ">=6.0"
+tqdm = ">=4.66"
+pytest = ">=8.0"
+opencv = ">=4.8"
+
+# NVIDIA CUDA PyTorch (conda-forge). cuda-version pins the toolkit
+# libtorch / torchvision are built against.
+[target."*-cuda".dependencies]
+pytorch-gpu = ">=2.4"
+cuda-version = "12.6.*"
+
+[target."*-cpu".dependencies]
+pytorch-cpu = ">=2.4"
+
+[tasks]
+# Environment / hardware
+info = "python -m isic2018.cli info"
+check-cuda = "python -m isic2018.cli info --cuda"
+
+# Data
+generate-demo = "python -m isic2018.cli generate-demo"
+download = "python -m isic2018.cli download"
+
+# Task A — lesion segmentation (U-Net)
+train-seg = "python -m isic2018.cli train-seg"
+eval-seg = "python -m isic2018.cli eval-seg"
+
+# Task B — classification (transfer CNN + imbalance + Grad-CAM)
+train-clf = "python -m isic2018.cli train-clf"
+eval-clf = "python -m isic2018.cli eval-clf"
+
+# Handcrafted features → Random Forest / XGBoost
+train-classical = "python -m isic2018.cli train-classical"
+
+# Whole-image vs segment-crop vs classical comparison
+compare = "python -m isic2018.cli compare"
+
+# Interactive visualization (requires a display)
+viz = "python -m isic2018.cli viz"
+
+# Full pedagogical pipeline on synthetic demo data
+demo = "python -m isic2018.cli demo"
+
+# Unit tests (CPU, no display, no ISIC download)
+test = "pytest tests -q"
+
+[tasks.demo-smoke]
+cmd = "python -m isic2018.cli demo --epochs 1 --per-class 2 --image-size 64"
+description = "Tiny end-to-end smoke run for CI / laptops"
